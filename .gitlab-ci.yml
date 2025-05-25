@@ -1,0 +1,37 @@
+# .gitlab-ci.yml
+# Este archivo define el pipeline de CI/CD para tu proyecto.
+
+# Define la etapa (stage) de tu pipeline. Para sitios estáticos, una etapa de 'deploy' es suficiente.
+stages:
+  - deploy
+
+# Define el trabajo (job) que se encargará del despliegue en GitLab Pages.
+# El nombre 'pages' es especial y GitLab lo reconoce para el despliegue de páginas.
+pages:
+  stage: deploy
+  image: alpine:latest # Usa una imagen Docker ligera. Alpine es buena para operaciones de archivos.
+  script:
+    # 1. Crea la carpeta 'public'. GitLab Pages espera que los archivos se sirvan desde aquí.
+    - mkdir public
+
+    # 2. Copia todos tus archivos estáticos a la carpeta 'public'.
+    # Si tienes más archivos (ej. imágenes, fuentes), asegúrate de copiarlos también.
+    - cp index.html public/
+    - cp styles.css public/
+    - cp app.js public/
+    - cp quiz.js public/
+    - cp timer.js public/
+    
+    # 3. Copia la carpeta 'questions' y su contenido recursivamente.
+    - cp -r questions/ public/questions/ 
+
+  # Los artefactos (artifacts) son los archivos que se guardarán del job.
+  # Para GitLab Pages, necesitamos que el directorio 'public' sea el artefacto.
+  artifacts:
+    paths:
+      - public
+  
+  # Reglas para cuándo ejecutar este job.
+  # Aquí, se ejecutará solo cuando hagas un push a la rama por defecto (ej. 'main' o 'master').
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
