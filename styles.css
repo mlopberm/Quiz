@@ -1,0 +1,59 @@
+/* ——— Contenedor central para Aprender / Test ——— */
+.app-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #1f2937;            /* slate-800 */
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ——— Botones “Enviar” + “Siguiente” juntos ——— */
+.buttons-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ——— Botón principal (Enviar) ——— */
+.btn-primary {
+  background: #0ea5e9;            /* sky-600 */
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn-primary:hover {
+  background: #0284c7;            /* sky-700 */
+  transform: scale(1.02);
+}
+
+/* ——— Botón secundario (Siguiente) ——— */
+.btn-secondary {
+  background: #334155;            /* slate-700 */
+  color: #e2e8f0;                 /* slate-200 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn-secondary:hover {
+  background: #475569;            /* slate-600 */
+  transform: scale(1.02);
+}
+
+/* ——— Botón “Cambiar curso” ——— */
+.change-course-btn {
+  display: inline-block;
+  margin-top: 2rem;
+  color: #38bdf8;                 /* sky-400 */
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.change-course-btn:hover {
+  color: #0ea5e9;                 /* sky-600 */
+}

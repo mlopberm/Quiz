@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Azure AI Learning & Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="font-sans bg-slate-900 text-slate-100">
+
+  <!-- 1) Selección de curso -->
+  <div id="courseSelection" class="flex flex-col items-center justify-center h-screen">
+    <h2 class="text-2xl mb-6">Selecciona el curso</h2>
+    <select id="courseDropdown" class="border p-2 mb-4 bg-slate-800 text-slate-200">
+      <option value="">-- Elige un curso --</option>
+      <option value="AI-900">Azure AI Fundamentals (AI-900)</option>
+      <option value="AZ-900">Azure Data Fundamentals (AZ-900)</option>
+    </select>
+    <button id="courseStartBtn"
+            class="btn-primary disabled:opacity-50"
+            disabled>
+      Comenzar
+    </button>
+  </div>
+
+  <!-- 2) Contenedor principal de la app (oculto hasta elegir curso) -->
+  <div id="appContainer" class="hidden">
+
+    <!-- Contenedor central -->
+    <div class="app-container">
+
+      <!-- Pestañas Learn / Test -->
+      <nav class="flex space-x-4 border-b border-slate-700 mb-6">
+        <button id="learnTab" class="text-slate-400 pb-2 hover:text-slate-100">Aprender</button>
+        <button id="testTab"  class="text-slate-400 pb-2 hover:text-slate-100">Test</button>
+      </nav>
+
+      <!-- Contenido Aprender -->
+      <section id="learnContent">
+        <div class="prose prose-invert max-w-none">
+          <h2 class="text-2xl font-bold text-sky-400 mb-4">¡Bienvenido al Centro de Aprendizaje de Azure AI!</h2>
+          <p class="mb-3 text-slate-300">Esta sección proporciona una breve descripción …</p>
+          <h3 class="text-xl font-semibold text-sky-500 mt-6 mb-3">Áreas Clave de Azure AI:</h3>
+            <ul class="list-disc list-inside space-y-2 text-slate-300">
+                <li><strong>IA Conversacional:</strong> Potenciando chatbots y asistentes virtuales (ej., Azure Bot Service).</li>
+                <li><strong>IA Generativa:</strong> Creando contenido novedoso como texto, imágenes y código (ej., Azure OpenAI Service).</li>
+                <li><strong>Minería de Conocimiento:</strong> Extrayendo información valiosa de grandes volúmenes de datos estructurados y no estructurados.</li>
+                <li><strong>Procesamiento de Lenguaje Natural (NLP):</strong> Permitiendo a las máquinas entender y procesar el lenguaje humano (incluye análisis de sentimiento, traducción, reconocimiento de entidades).</li>
+                <li><strong>Visión por Computadora:</strong> Permitiendo a los sistemas interpretar y analizar información visual de imágenes y videos (incluye detección de objetos, OCR, clasificación de imágenes).</li>
+                <li><strong>Aprendizaje Automático:</strong> Construyendo modelos predictivos usando algoritmos y datos (tipos comunes incluyen regresión, clasificación, clustering).</li>
+                <li><strong>IA Responsable:</strong> Guiando el desarrollo de sistemas de IA para que sean justos, transparentes, confiables, seguros, privados y responsables.</li>
+            </ul>
+            <p class="mt-6 text-slate-300">Cuando estés listo, cambia a la pestaña "Test" para comprobar tu comprensión con un cuestionario de 10 preguntas.</p>
+        </div>
+      </section>
+
+      <!-- Contenido Test -->
+      <section id="testContent" class="hidden">
+
+        <!-- Área del quiz -->
+        <div id="quizArea">
+          <div class="mb-4">
+            <div class="flex justify-between items-center mb-2">
+              <p class="text-sm text-slate-400">
+                Pregunta <span id="currentQuestionNumber">1</span> de 
+                <span id="totalQuestionsDisplay">10</span>
+              </p>
+              <div class="flex items-center space-x-4">
+                <p class="text-sm font-semibold text-sky-400">
+                  Puntuación: <span id="currentScore">0</span>
+                </p>
+                <p id="timerDisplay" class="text-sm font-semibold text-sky-400">
+                  Tiempo: <span id="timeValue">00:00</span>
+                </p>
+              </div>
+            </div>
+            <div class="w-full bg-slate-700 rounded-full h-2.5 shadow-inner">
+              <div id="progressBar"
+                   class="bg-sky-500 h-2.5 rounded-full transition-all duration-500 ease-out"
+                   style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div id="questionContainer"
+               class="bg-slate-700 p-6 rounded-lg shadow-xl mb-6 min-h-[150px] flex flex-col justify-center">
+            <h2 id="question"
+                class="text-lg md:text-xl font-semibold text-slate-100 mb-4">
+              Cargando pregunta...
+            </h2>
+            <div id="optionsContainer" class="space-y-3"></div>
+          </div>
+
+          <div id="feedbackArea"
+               class="mb-6 p-4 rounded-md text-sm min-h-[50px] hidden">
+            <p id="feedbackText" class="font-semibold"></p>
+            <p id="explanationText" class="mt-1 text-slate-300"></p>
+          </div>
+
+          <!-- Botones Enviar + Siguiente lado a lado -->
+          <div class="buttons-container">
+            <button id="submitAnswerButton" class="btn-primary">
+              Enviar Respuesta
+            </button>
+            <button id="nextQuestionButton" class="btn-secondary hidden">
+              Siguiente Pregunta
+            </button>
+          </div>
+        </div>
+
+        <!-- Resultados -->
+        <div id="resultsArea" class="hidden slide-up-fade-in text-center">
+          <h2 class="text-3xl font-bold text-sky-400 mb-4">¡Cuestionario Completado!</h2>
+          <p class="text-xl text-slate-200 mb-2">Tu Puntuación Final:</p>
+          <p id="finalScoreText" class="text-5xl font-bold text-sky-500 mb-6">0 / 10</p>
+          <p id="timeTakenText" class="text-lg text-slate-300 mb-6">
+            Tiempo empleado: <span id="finalTimeValue">00:00</span>
+          </p>
+          <p id="resultsMessage" class="text-slate-300 mb-6"></p>
+          <button id="restartQuizButton" class="btn-primary">
+            Reiniciar Cuestionario
+          </button>
+        </div>
+
+      </section>
+
+      <!-- Botón global para cambiar de curso -->
+      <div class="text-center">
+        <button id="changeCourseBtn" class="change-course-btn">
+          ← Cambiar curso
+        </button>
+      </div>
+
+    </div><!-- /app-container -->
+
+  </div><!-- /appContainer -->
+
+
+  <script type="module" src="app.js" defer></script>
+  
+</body>
+</html>
