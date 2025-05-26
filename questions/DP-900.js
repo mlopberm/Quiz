@@ -1,4 +1,4 @@
-// questions/AZ-900.js
+// questions/DP-900.js
 export const questions = [
   {
     id: 2,
@@ -13,5 +13,5 @@ export const questions = [
     explanation: "Columnstore está optimizado para consultas analíticas en grandes volúmenes…",
     type: "single"
   },
-  // … más preguntas AZ-900 …
+  // … más preguntas DP-900 …
 ];
