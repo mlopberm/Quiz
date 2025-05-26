@@ -141,7 +141,7 @@ export class Quiz {
       return;
     }
     this.submitAnswerButton.disabled = true;
-
+    this.submitAnswerButton.classList.add('hidden');
     const q = this.currentQuizQuestions[this.currentQuestionIndex];
     const correct = this._checkAnswer(q);
     if (correct) {
