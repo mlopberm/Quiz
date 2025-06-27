@@ -54,7 +54,7 @@ export class Quiz {
   _selectRandom() {
     const copy = [...this.allQuestions];
     this._shuffle(copy);
-    this.currentQuizQuestions = copy.slice(0, 20);
+    this.currentQuizQuestions = copy.slice(0, 10);
   }
 
   startNewQuiz() {
